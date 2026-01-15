@@ -1,0 +1,44 @@
+.home-container {
+  padding: 40px 80px;
+}
+
+/* Section styling to separate rows */
+.section {
+  margin-bottom: 50px; /* Space between Local and International rows */
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 24px;
+  text-transform: capitalize;
+}
+
+/* Keep the grid the same, it will reuse this for both rows */
+.listings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 24px;
+}
+
+/* ... keep your existing card styles below ... */
+.listing-card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+/* (The rest of your CSS remains unchanged) *//* App.css */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* This pushes your content down so it's not hidden behind the fixed Navbar */
+.home-container {
+  padding-top: 100px !important; /* Adjust this value if needed */
+  padding-bottom: 40px;
+  min-height: 80vh; /* Ensures footer stays at bottom even if content is short */
+}

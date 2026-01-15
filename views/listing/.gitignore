@@ -1,0 +1,14 @@
+# React specific
+node_modules/
+build/
+.env
+
+# Python specific
+__pycache__/
+*.pyc
+venv/
+.pytest_cache/
+
+# System specific
+.DS_Store
+Thumbs.db

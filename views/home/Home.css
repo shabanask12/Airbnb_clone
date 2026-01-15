@@ -1,0 +1,75 @@
+.home-container {
+  padding: 24px 80px;
+}
+
+/* Responsive Grid similar to Airbnb */
+.listings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 24px;
+}
+/* Add this to Home.css to fix the spacing */
+.section {
+  margin-bottom: 60px; /* Pushes the next section down */
+}
+
+.section-title {
+  margin-bottom: 20px; /* Adds space between the title and the images */
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #222;
+}
+.listing-card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.image-container {
+  position: relative;
+  aspect-ratio: 1 / 0.95; /* Square-ish shape */
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.image-container:hover img {
+  transform: scale(1.05); /* Zoom effect on hover */
+}
+
+.heart-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  color: white;
+  font-size: 24px;
+  fill: rgba(0,0,0,0.5);
+}
+
+.details {
+  font-size: 15px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  color: #222;
+}
+
+.star {
+  margin-right: 4px;
+}
+
+.price {
+  margin-top: 6px;
+  color: #222;
+  text-decoration: underline;
+}
