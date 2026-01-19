@@ -1,41 +1,58 @@
 import React from 'react';
-import { FaHeart, FaStar, FaClock } from 'react-icons/fa'; // Added FaClock
 import { useNavigate } from 'react-router-dom';
-import './Home.css';
+import { FaHeart, FaStar } from 'react-icons/fa';
+import './ListingCard.css';
 
-const ListingCard = ({ listing }) => {
+// 1. Add a "type" prop to the component arguments
+const ListingCard = ({ listing, onWishlistClick, isSaved, type }) => {
   const navigate = useNavigate();
 
+  const handleCardClick = () => {
+    // 2. CHECK: Is this a service or a house?
+    // We check the prop passed from the parent, OR the internal listing.type
+    if (type === 'service' || listing.type === 'Service') {
+      navigate(`/services/${listing.id}`);
+    } else {
+      navigate(`/listing/${listing.id}`);
+    }
+  };
+
   return (
-    <div 
-      className="listing-card" 
-      onClick={() => navigate(`/listing/${listing.id}`)}
-    >
+    <div className="listing-card" onClick={handleCardClick}>
       <div className="image-container">
-        <img src={listing.image} alt={listing.title} />
-        <div className="heart-icon"><FaHeart /></div>
-        {/* Optional: Show Category Badge on Image */}
-        <div className="category-badge">{listing.category}</div>
+        <img src={listing.image_url || listing.image} alt={listing.title} />
+        
+        {/* Only show Heart icon if it's NOT a service (optional preference) */}
+        {type !== 'service' && (
+           <button 
+             className={`wishlist-btn ${isSaved ? 'active' : ''}`} 
+             onClick={(e) => {
+               e.stopPropagation(); // Stop card click
+               onWishlistClick && onWishlistClick();
+             }}
+           >
+             <FaHeart />
+           </button>
+        )}
       </div>
-      
-      <div className="details">
-        <div className="header">
-          <span className="location">{listing.location}</span>
-          <span className="rating">
-             <FaStar className="star"/> {listing.rating}
-          </span>
+
+      <div className="card-details">
+        <div className="card-header">
+          <h3>{listing.title}</h3>
+          <div className="rating">
+            <FaStar /> <span>{listing.rating || 'New'}</span>
+          </div>
         </div>
-
-        {/* Updated to show Duration from DB */}
-        <p className="description" style={{color: '#717171', margin: '4px 0', fontSize: '0.9rem'}}>
-           <FaClock style={{marginRight: '5px'}}/> 
-           {listing.duration || 'Flexible duration'}
+        <p className="location">{listing.location}</p>
+        <p className="date-range">
+            {/* Show duration for services, dates for homes */}
+            {listing.duration ? listing.duration : "22-27 Jul"}
         </p>
-
-        <p className="price">
-           {/* toLocaleString adds commas (e.g., 4,500) */}
-           <strong>₹{listing.price.toLocaleString()}</strong> 
-        </p>
+        <div className="price">
+          <strong>₹{listing.price.toLocaleString()}</strong> 
+          {/* Hide "night" label for services if you want */}
+          <span> {type === 'service' ? '/ session' : ' night'}</span>
+        </div>
       </div>
     </div>
   );

@@ -1,13 +1,18 @@
-.home-container {
-  padding: 24px 80px;
-}
 
+.home-container {
+  /* 1. Set the side padding first */
+  padding: 24px 80px;
+
+  /* 2. FORCE the top padding to be huge (AFTER the line above) */
+  padding-top: 220px !important; 
+}
 /* Responsive Grid similar to Airbnb */
 .listings-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
   gap: 24px;
 }
+
 /* Add this to Home.css to fix the spacing */
 .section {
   margin-bottom: 60px; /* Pushes the next section down */

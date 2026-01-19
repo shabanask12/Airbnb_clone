@@ -1,0 +1,76 @@
+/* src/views/services/Services.css */
+
+.services-page {
+  padding-top: 80px; /* Space for navbar */
+  min-height: 100vh;
+  background-color: #fff;
+}
+
+/* --- Hero Section --- */
+.services-hero {
+  background: linear-gradient(135deg, #ff385c 0%, #bd1e59 100%);
+  color: white;
+  padding: 60px 40px;
+  text-align: center;
+  margin-bottom: 40px;
+  border-radius: 0 0 20px 20px; /* Rounded bottom corners */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.services-hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.services-hero p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* --- Content Container --- */
+.services-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px 60px;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: #222;
+}
+
+/* --- Grid Layout --- */
+.services-grid {
+  display: grid;
+  /* Auto-fit columns: roughly 270px wide each */
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 30px;
+}
+
+/* Loading State */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  font-size: 1.2rem;
+  color: #717171;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .services-hero {
+    padding: 40px 20px;
+  }
+  .services-hero h1 {
+    font-size: 1.8rem;
+  }
+  .services-container {
+    padding: 0 20px 40px;
+  }
+}

@@ -1,0 +1,141 @@
+.listing-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    cursor: pointer;
+    font-family: 'Circular', -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden; /* Keeps image corners rounded */
+  }
+  
+  /* --- IMAGE CONTAINER --- */
+  .image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 20 / 19; /* Standard Airbnb ratio */
+    background-color: #dddddd;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  .listing-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: filter 0.2s;
+  }
+  
+  /* --- HEART ICON --- */
+  .heart-icon {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 10;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
+  .heart-icon:active {
+    transform: scale(0.9);
+  }
+  
+  /* --- NAVIGATION ARROWS --- */
+  .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.2s, transform 0.1s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 5;
+  }
+  
+  .listing-card:hover .nav-btn {
+    opacity: 1; /* Show on hover */
+  }
+  
+  .nav-btn:hover {
+    transform: translateY(-50%) scale(1.05);
+    background-color: #f7f7f7;
+  }
+  
+  .prev { left: 10px; }
+  .next { right: 10px; }
+  
+  /* --- DETAILS SECTION --- */
+  .details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  .title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .location {
+    font-weight: 600;
+    font-size: 15px;
+    color: #222222;
+  }
+  
+  .rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    color: #222222;
+  }
+  
+  .distance, .dates {
+    font-size: 14px;
+    color: #717171;
+    margin: 0;
+  }
+  
+  .price {
+    margin-top: 6px;
+    font-size: 15px;
+    color: #222222;
+  }
+  
+  /* --- MODAL STYLES (Popup) --- */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5); /* Dim background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+  
+  .modal-content {
+    background: white;
+    width: 100%;
+    max-width: 500px; /* Limits width on big screens */
+    border-radius: 12px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.28);
+    overflow: hidden;
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  @keyframes slideUp {
+    from { transform: translateY(100px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }

@@ -1,27 +1,24 @@
 // src/services/listingService.js
-import { ListingModel } from '../models/listingModel';
+const API_URL = "http://localhost:5000/api/listings"; 
 
-const API_URL = "http://127.0.0.1:5000/api/listings";
-
-// 1. Get ALL listings
 export const fetchAllListings = async () => {
   try {
     const response = await fetch(API_URL);
     if (!response.ok) throw new Error('Error fetching data');
     const rawData = await response.json();
     
-    return rawData.map(item => new ListingModel({
+    return rawData.map(item => ({
       id: item.id,
       title: item.title,
       location: item.location,
       price: parseFloat(item.price),
       rating: item.rating || 0,
-      image: item.image_url,
+      
+      // FIX 1: Handle both names. If 'image_url' is missing, use 'image'
+      image_url: item.image_url || item.image, 
+      
       category: item.category || 'General',
-      
-      // --- ADD THIS LINE ---
-      type: item.type || 'Local', // Map the database column here
-      
+      type: item.type || 'Local', 
       duration: item.duration, 
       guests: item.guests 
     }));
@@ -31,10 +28,11 @@ export const fetchAllListings = async () => {
   }
 };
 
-// 2. Get SINGLE listing (Add this here!)
 export const fetchListingById = async (id) => {
     try {
         const response = await fetch(`${API_URL}/${id}`);
+        
+        // If the ID doesn't exist in DB, this throws an error
         if (!response.ok) throw new Error('Listing not found');
         
         const item = await response.json();
@@ -45,12 +43,17 @@ export const fetchListingById = async (id) => {
             location: item.location,
             price: parseFloat(item.price),
             rating: item.rating,
-            image: item.image_url,
+            
+            // FIX 1: Same fix for the details page
+            image_url: item.image_url || item.image, 
+            
             description: item.description,
             guests: item.guests,
             duration: item.duration,
+            
+            // FIX 2: Ensure this is ALWAYS an array (prevents "Unexpected token" crash)
             facilities: item.facilities ? item.facilities.split(',') : [],
-            category: item.category // Ensure category is included if needed
+            category: item.category 
         };
     } catch (error) {
         console.error("Error fetching details:", error);
