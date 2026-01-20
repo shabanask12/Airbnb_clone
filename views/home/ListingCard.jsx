@@ -1,57 +1,49 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaHeart, FaStar } from 'react-icons/fa';
+import { FaStar, FaHeart, FaRegHeart } from 'react-icons/fa';
 import './ListingCard.css';
 
-// 1. Add a "type" prop to the component arguments
-const ListingCard = ({ listing, onWishlistClick, isSaved, type }) => {
+const ListingCard = ({ listing, onWishlistClick, isSaved }) => {
   const navigate = useNavigate();
 
-  const handleCardClick = () => {
-    // 2. CHECK: Is this a service or a house?
-    // We check the prop passed from the parent, OR the internal listing.type
-    if (type === 'service' || listing.type === 'Service') {
-      navigate(`/services/${listing.id}`);
-    } else {
-      navigate(`/listing/${listing.id}`);
-    }
-  };
-
   return (
-    <div className="listing-card" onClick={handleCardClick}>
+    <div className="listing-card">
       <div className="image-container">
-        <img src={listing.image_url || listing.image} alt={listing.title} />
+        <img 
+            src={listing.image_url} 
+            alt={listing.title} 
+            className="listing-image"
+            onClick={() => navigate(`/listings/${listing.id}`)} // Click image to go to details
+        />
         
-        {/* Only show Heart icon if it's NOT a service (optional preference) */}
-        {type !== 'service' && (
-           <button 
-             className={`wishlist-btn ${isSaved ? 'active' : ''}`} 
-             onClick={(e) => {
-               e.stopPropagation(); // Stop card click
-               onWishlistClick && onWishlistClick();
-             }}
-           >
-             <FaHeart />
-           </button>
-        )}
+        {/* --- THE MISSING HEART ICON --- */}
+        <div 
+            className="wishlist-icon" 
+            onClick={(e) => {
+                e.stopPropagation(); // Prevent going to details page when clicking heart
+                onWishlistClick();
+            }}
+        >
+            {isSaved ? (
+                <FaHeart color="#ff385c" size={24} />
+            ) : (
+                <FaRegHeart color="white" size={24} style={{ fill: 'rgba(0, 0, 0, 0.5)', stroke: 'white', strokeWidth: '20px' }} />
+            )}
+        </div>
       </div>
 
-      <div className="card-details">
-        <div className="card-header">
-          <h3>{listing.title}</h3>
+      <div className="listing-info" onClick={() => navigate(`/listings/${listing.id}`)}>
+        <div className="row-1">
+          <h3 className="listing-title">{listing.title}</h3>
           <div className="rating">
-            <FaStar /> <span>{listing.rating || 'New'}</span>
+            <FaStar size={12} />
+            <span>{listing.rating}</span>
           </div>
         </div>
-        <p className="location">{listing.location}</p>
-        <p className="date-range">
-            {/* Show duration for services, dates for homes */}
-            {listing.duration ? listing.duration : "22-27 Jul"}
-        </p>
-        <div className="price">
-          <strong>₹{listing.price.toLocaleString()}</strong> 
-          {/* Hide "night" label for services if you want */}
-          <span> {type === 'service' ? '/ session' : ' night'}</span>
+        <p className="listing-location">{listing.location}</p>
+        <p className="listing-dates">1 Night</p>
+        <div className="listing-price">
+          <span className="price-tag">₹{listing.price.toLocaleString()}</span> night
         </div>
       </div>
     </div>

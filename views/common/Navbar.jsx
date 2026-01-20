@@ -1,31 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { FaSearch, FaUserCircle, FaHeart, FaConciergeBell, FaHome } from 'react-icons/fa'; 
-import { Link, useLocation } from 'react-router-dom';
+import { FaSearch, FaUserCircle, FaHeart, FaConciergeBell, FaHome } from 'react-icons/fa';
+import { Link, useLocation, useNavigate } from 'react-router-dom'; // 1. Added useNavigate
 import { useSearch } from '../../context/SearchContext';
 import LoginModal from './LoginModal';
-import './Navbar.css'; 
+import './Navbar.css';
 
 const Navbar = () => {
   const { searchTerm, setSearchTerm } = useSearch();
   const location = useLocation();
+  const navigate = useNavigate(); // 2. Initialized the hook
 
   const [showLogin, setShowLogin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState(''); 
+  const [userName, setUserName] = useState('');
 
   // --- CHECK SESSION ON LOAD ---
   useEffect(() => {
     const checkSession = async () => {
       try {
         const res = await fetch('http://localhost:5000/api/auth/me', {
-            method: 'GET',
-            credentials: 'include' // <--- CHECKS COOKIE
+          method: 'GET',
+          credentials: 'include'
         });
         const data = await res.json();
-        
+
         if (data.logged_in) {
-            setIsLoggedIn(true);
-            setUserName(data.user);
+          setIsLoggedIn(true);
+          setUserName(data.user);
         }
       } catch (err) {
         console.log("Not logged in");
@@ -45,19 +46,21 @@ const Navbar = () => {
           </Link>
 
           <div className="search-bar" style={styles.search}>
-            <input type="text" placeholder="Search destinations" style={styles.input} 
+            <input type="text" placeholder="Search destinations" style={styles.input}
               value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             <span style={styles.searchIcon}><FaSearch color="white" size={12} /></span>
           </div>
 
           <div className="profile" style={styles.profile}>
             <Link to="/wishlists" style={styles.linkItem}>
-                <div style={styles.iconContainer}><FaHeart size={18} /></div>
+              <div style={styles.iconContainer}><FaHeart size={18} /></div>
             </Link>
-            <div style={{cursor: 'pointer', display: 'flex', alignItems: 'center'}}
-               onClick={() => isLoggedIn ? alert(`Logged in as ${userName}`) : setShowLogin(true)}>
-               <FaUserCircle size={30} color={isLoggedIn ? '#ff385c' : '#717171'} style={{ marginLeft: '10px' }} />
-               {isLoggedIn && <span style={{fontSize:'12px', marginLeft:'5px', fontWeight:'bold'}}>Hi, {userName.split('@')[0]}</span>}
+
+            {/* 3. Updated onClick to use navigate() */}
+            <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+              onClick={() => isLoggedIn ? navigate('/profile') : setShowLogin(true)}>
+              <FaUserCircle size={30} color={isLoggedIn ? '#ff385c' : '#717171'} style={{ marginLeft: '10px' }} />
+              {isLoggedIn && <span style={{ fontSize: '12px', marginLeft: '5px', fontWeight: 'bold' }}>Hi, {userName.split('@')[0]}</span>}
             </div>
           </div>
         </div>
@@ -65,26 +68,26 @@ const Navbar = () => {
         <div style={styles.bottomRow}>
           <Link to="/" style={{ textDecoration: 'none' }}>
             <div style={styles.navItem}>
-               <FaHome size={24} color={isActive('/') ? 'black' : '#717171'} />
-               <span style={isActive('/') ? styles.activeText : styles.inactiveText}>Home</span>
+              <FaHome size={24} color={isActive('/') ? 'black' : '#717171'} />
+              <span style={isActive('/') ? styles.activeText : styles.inactiveText}>Home</span>
             </div>
           </Link>
           <Link to="/services" style={{ textDecoration: 'none' }}>
             <div style={styles.navItem}>
-               <FaConciergeBell size={24} color={isActive('/services') ? 'black' : '#717171'} />
-               <span style={isActive('/services') ? styles.activeText : styles.inactiveText}>Services</span>
+              <FaConciergeBell size={24} color={isActive('/services') ? 'black' : '#717171'} />
+              <span style={isActive('/services') ? styles.activeText : styles.inactiveText}>Services</span>
             </div>
           </Link>
         </div>
       </nav>
 
       {showLogin && (
-        <LoginModal 
-            onClose={() => setShowLogin(false)}
-            onLoginSuccess={(user) => {
-                setIsLoggedIn(true);
-                setUserName(user);
-            }}
+        <LoginModal
+          onClose={() => setShowLogin(false)}
+          onLoginSuccess={(user) => {
+            setIsLoggedIn(true);
+            setUserName(user);
+          }}
         />
       )}
     </>
