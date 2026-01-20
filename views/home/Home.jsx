@@ -54,9 +54,10 @@ const Home = () => {
   const handleCreateWishlist = async (name) => {
     try {
       // 1. Send to Backend
-      const response = await fetch('http://127.0.0.1:5000/api/wishlists', {
+      const response = await fetch('http://localhost:5000/api/wishlists', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include', // <--- CRITICAL: Sends the "I am logged in" cookie
         body: JSON.stringify({
           name: name,
           listing_id: selectedListing.id

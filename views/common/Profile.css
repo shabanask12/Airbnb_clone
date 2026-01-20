@@ -1,0 +1,47 @@
+.profile-container {
+    max-width: 800px;
+    margin: 100px auto; /* Leave space for navbar */
+    padding: 20px;
+}
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+.logout-btn {
+    background: #ddd;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.history-card {
+    display: flex;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.history-img {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+}
+.history-details {
+    padding: 15px 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.history-details h3 { margin: 0 0 5px 0; font-size: 1.2rem; }
+.location { color: #717171; margin: 0 0 10px 0; font-size: 0.9rem; }
+.meta-row { display: flex; gap: 20px; font-size: 0.9rem; color: #444; margin-bottom: 10px; }
+.price-row { display: flex; justify-content: space-between; align-items: center; }
+.total { font-weight: bold; font-size: 1.1rem; }
+.status.success { background: #e6ffea; color: #008a05; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+.trans-id { font-size: 0.75rem; color: #aaa; margin-top: 10px; }
