@@ -234,18 +234,7 @@ CVV: Any 3 digits
 * Image upload instead of image URLs
 * Deployment on cloud (AWS / Render / Railway)
 
----
-
-## 💼 Resume Highlight
-
-This project demonstrates:
-
-* Full‑stack development
-* Secure payment integration
-* Real‑world booking workflow
-* Authentication, authorization, and admin management
-
----
+---  
 
 ## 🙌 Author
 
